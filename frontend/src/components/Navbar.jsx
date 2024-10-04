@@ -1,4 +1,4 @@
-import { Button, Container, Flex, HStack, Text, useColorMode } from "@chakra-ui/react";
+import { Button, Container, Flex, HStack, Text, useColorMode, useColorModeValue } from "@chakra-ui/react";
 import React from "react";
 import { Link } from "react-router-dom";
 import { FaMoon, FaPlus, FaSun } from "react-icons/fa";
@@ -8,7 +8,11 @@ const Navbar = () => {
     const { colorMode, toggleColorMode } = useColorMode();
 
     return (
-        <Container maxW={"1140px"} px={4}>
+        <Container 
+        maxW={"1140px"} 
+        px={4}
+        bg={useColorModeValue('gray.100', 'gray.900')}
+        >
             <Flex
                 h={16}
                 alignItems={"center"}
