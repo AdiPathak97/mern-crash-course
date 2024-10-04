@@ -1,2 +1,9 @@
+# node / npm
 node_modules
+
+# environment variables
 .env
+
+# editor files
+.vscode
+.history
