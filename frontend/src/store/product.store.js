@@ -3,6 +3,7 @@ import { create } from 'zustand';
 export const useProductStore = create((set) => ({
     products: [],
     setProducts: (products) => set({ products }),
+
     createProduct: async (newProduct) => {
         if(!newProduct.name || !newProduct.price || ! newProduct.price) {
             return {
@@ -26,6 +27,16 @@ export const useProductStore = create((set) => ({
                 success: true,
                 message: 'Product created successfully'
             };
+        }
+    },
+
+    fetchProducts: async() => {
+        const res = await fetch('/api/products');
+        const resData = await res.json();
+        if (resData.success) {
+            set({products: resData.data})
+        } else {
+            return resData;
         }
     }
 }));
