@@ -10,10 +10,15 @@ const ProductCard = ({key, product}) => {
   const textColor = useColorModeValue('gray.600', 'gray.200');
   const bgAdaptive = useColorModeValue('white', 'gray.800');
 
-  const { deleteProduct } = useProductStore();
+  const { deleteProduct, updateProduct } = useProductStore();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const toast = useToast();
+
+  const handleUpdateProduct = async (pid, updatedProduct) => {
+    const { success, message } = await updateProduct(pid, updatedProduct);
+    onClose();
+  }
 
   const handleDeleteProduct = async (pid) => {
     const { success, message } = await deleteProduct(pid);
@@ -72,13 +77,21 @@ const ProductCard = ({key, product}) => {
                 <ModalCloseButton />
                 <ModalBody>
                     <VStack>
-                        <Input placeholder='Product Name' name='name' value={updatedProduct.name}/>
-                        <Input placeholder='Product Price' name='price' type='number' value={updatedProduct.price}/>
-                        <Input placeholder='Product Image URL' name='image' value={updatedProduct.image}/>
+                        <Input placeholder='Product Name' name='name' 
+                        value={updatedProduct.name}
+                        onChange={(e) => setUpdatedProduct({...updatedProduct, name: e.target.value})}/>
+
+                        <Input placeholder='Product Price' name='price' type='number' 
+                        value={updatedProduct.price}
+                        onChange={(e) => setUpdatedProduct({...updatedProduct, price: e.target.value})}/>
+
+                        <Input placeholder='Product Image URL' name='image' 
+                        value={updatedProduct.image}
+                        onChange={(e) => setUpdatedProduct({...updatedProduct, image: e.target.value})}/>
                     </VStack>
                 </ModalBody>
                 <ModalFooter>
-                    <Button colorScheme='blue' mr={3}>
+                    <Button colorScheme='blue' mr={3} onClick={() => handleUpdateProduct(product._id, updatedProduct)}>
                         Update
                     </Button>
                     <Button variant='ghost' onClick={onClose}>Close</Button>
