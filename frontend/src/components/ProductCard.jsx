@@ -1,9 +1,11 @@
 import { Box, Button, Heading, HStack, IconButton, Image, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Text, useColorModeValue, useDisclosure, useToast, VStack } from '@chakra-ui/react'
-import React from 'react'
+import React, { useState } from 'react'
 import { FaEdit, FaTrash } from 'react-icons/fa';
 import { useProductStore } from '../store/product.store';
 
 const ProductCard = ({key, product}) => {
+
+  const [updatedProduct, setUpdatedProduct] = useState(product);
 
   const textColor = useColorModeValue('gray.600', 'gray.200');
   const bgAdaptive = useColorModeValue('white', 'gray.800');
@@ -70,9 +72,9 @@ const ProductCard = ({key, product}) => {
                 <ModalCloseButton />
                 <ModalBody>
                     <VStack>
-                        <Input placeholder='Product Name' name='name'/>
-                        <Input placeholder='Product Price' name='price' type='number'/>
-                        <Input placeholder='Product Image URL' name='image'/>
+                        <Input placeholder='Product Name' name='name' value={updatedProduct.name}/>
+                        <Input placeholder='Product Price' name='price' type='number' value={updatedProduct.price}/>
+                        <Input placeholder='Product Image URL' name='image' value={updatedProduct.image}/>
                     </VStack>
                 </ModalBody>
                 <ModalFooter>
