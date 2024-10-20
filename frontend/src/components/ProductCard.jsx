@@ -1,11 +1,35 @@
-import { Box, Heading, HStack, IconButton, Image, Text, useColorModePreference, useColorModeValue, VStack } from '@chakra-ui/react'
+import { Box, Heading, HStack, IconButton, Image, Text, useColorModeValue, useToast, VStack } from '@chakra-ui/react'
 import React from 'react'
 import { FaEdit, FaTrash } from 'react-icons/fa';
+import { useProductStore } from '../store/product.store';
 
 const ProductCard = ({key, product}) => {
 
   const textColor = useColorModeValue('gray.600', 'gray.200');
   const bgAdaptive = useColorModeValue('white', 'gray.800');
+
+  const { deleteProduct } = useProductStore();
+
+  const toast = useToast();
+
+  const handleDeleteProduct = async (pid) => {
+    const { success, message } = await deleteProduct(pid);
+    if(success) {
+      toast({
+        title: "Success",
+        description: message,
+        status: "success",
+        isClosable: true
+      })
+    } else {
+      toast({
+        title: "Error",
+        description: message,
+        status: "error",
+        isClosable: true
+      })
+    }
+  }
 
   return (
     <Box    
@@ -21,7 +45,7 @@ const ProductCard = ({key, product}) => {
 
         <Box p={4}>
 
-            <VStack spacing={4} alignItems={'start'}>
+            <VStack spacing={2} alignItems={'start'}>
                 <Heading as={'h3'} size={'md'}>
                     {product.name}
                 </Heading>
@@ -32,7 +56,7 @@ const ProductCard = ({key, product}) => {
 
                 <HStack spacing={2}>
                     <IconButton aria-label='edit product' icon={ <FaEdit /> } />
-                    <IconButton aria-label='delete product' icon={ <FaTrash /> } />
+                    <IconButton aria-label='delete product' icon={ <FaTrash /> } onClick={() => handleDeleteProduct(product._id)} />
                 </HStack>
             </VStack>
 

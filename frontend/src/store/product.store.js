@@ -38,5 +38,17 @@ export const useProductStore = create((set) => ({
         } else {
             return resData;
         }
+    },
+
+    deleteProduct: async (pid) => {
+        const res = await fetch(`/api/products/${pid}`, {
+            method: 'DELETE'
+        });
+        const resData = await res.json();
+        if(resData.success) {
+            // update UI immediately without needing refresh
+            set((state) => ({products: state.products.filter(product => product._id !== pid)}));
+        }
+        return resData;
     }
 }));
