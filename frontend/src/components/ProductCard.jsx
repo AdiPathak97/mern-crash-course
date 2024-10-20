@@ -17,7 +17,22 @@ const ProductCard = ({key, product}) => {
 
   const handleUpdateProduct = async (pid, updatedProduct) => {
     const { success, message } = await updateProduct(pid, updatedProduct);
-    onClose();
+    if(success) {
+        toast({
+          title: "Success",
+          description: message,
+          status: "success",
+          isClosable: true
+        });
+        onClose();
+      } else {
+        toast({
+          title: "Error",
+          description: message,
+          status: "error",
+          isClosable: true
+        });
+      }
   }
 
   const handleDeleteProduct = async (pid) => {
