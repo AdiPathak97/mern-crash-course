@@ -1,4 +1,4 @@
-import { Box, Heading, HStack, IconButton, Image, Text, useColorModeValue, useToast, VStack } from '@chakra-ui/react'
+import { Box, Button, Heading, HStack, IconButton, Image, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Text, useColorModeValue, useDisclosure, useToast, VStack } from '@chakra-ui/react'
 import React from 'react'
 import { FaEdit, FaTrash } from 'react-icons/fa';
 import { useProductStore } from '../store/product.store';
@@ -9,6 +9,7 @@ const ProductCard = ({key, product}) => {
   const bgAdaptive = useColorModeValue('white', 'gray.800');
 
   const { deleteProduct } = useProductStore();
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   const toast = useToast();
 
@@ -55,12 +56,34 @@ const ProductCard = ({key, product}) => {
                 </Text>
 
                 <HStack spacing={2}>
-                    <IconButton aria-label='edit product' icon={ <FaEdit /> } />
+                    <IconButton aria-label='edit product' icon={ <FaEdit /> } onClick={onOpen} />
                     <IconButton aria-label='delete product' icon={ <FaTrash /> } onClick={() => handleDeleteProduct(product._id)} />
                 </HStack>
             </VStack>
 
         </Box>
+
+        <Modal isOpen={isOpen} onClose={onClose}>
+            <ModalOverlay/>
+            <ModalContent>
+                <ModalHeader>Update Product</ModalHeader>
+                <ModalCloseButton />
+                <ModalBody>
+                    <VStack>
+                        <Input placeholder='Product Name' name='name'/>
+                        <Input placeholder='Product Price' name='price' type='number'/>
+                        <Input placeholder='Product Image URL' name='image'/>
+                    </VStack>
+                </ModalBody>
+                <ModalFooter>
+                    <Button colorScheme='blue' mr={3}>
+                        Update
+                    </Button>
+                    <Button variant='ghost' onClick={onClose}>Close</Button>
+                </ModalFooter>
+            </ModalContent>
+
+        </Modal>
     </Box>
   )
 }
