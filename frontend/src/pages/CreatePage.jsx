@@ -19,7 +19,7 @@ const CreatePage = () => {
     if(success) {
       toast({
         title: "Success",
-        description: message,
+        description: "Product created successfully",
         status: "success",
         isClosable: true
       })

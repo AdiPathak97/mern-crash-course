@@ -20,7 +20,7 @@ const ProductCard = ({key, product}) => {
     if(success) {
         toast({
           title: "Success",
-          description: message,
+          description: "Product updated successfully",
           status: "success",
           isClosable: true
         });
@@ -40,7 +40,7 @@ const ProductCard = ({key, product}) => {
     if(success) {
       toast({
         title: "Success",
-        description: message,
+        description: "Product deleted successfully",
         status: "success",
         isClosable: true
       })

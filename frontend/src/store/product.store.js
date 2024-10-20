@@ -19,15 +19,10 @@ export const useProductStore = create((set) => ({
             body: JSON.stringify(newProduct)
         });
         const resData = await res.json();
-        if (!resData.success) {
-            return resData;
-        } else {
+        if (resData.success) {
             set((state) => ({products: [...state.products, resData.data]}));
-            return {
-                success: true,
-                message: 'Product created successfully'
-            };
-        }
+        } 
+        return resData;
     },
 
     fetchProducts: async() => {
@@ -35,9 +30,8 @@ export const useProductStore = create((set) => ({
         const resData = await res.json();
         if (resData.success) {
             set({products: resData.data})
-        } else {
-            return resData;
-        }
+        } 
+        return resData;
     },
 
     deleteProduct: async (pid) => {
@@ -67,12 +61,7 @@ export const useProductStore = create((set) => ({
                 products: state.products.map(
                     (product) => (product._id === pid ? resData.data : product)
                 )}));
-                return {
-                    success: true,
-                    message: 'Product updated successfully'
-                }; 
-        } else {
-            return resData;
-        }
+        } 
+        return resData;
     }
 }));
